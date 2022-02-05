@@ -28,11 +28,11 @@ public class APIService {
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @PostConstruct
-    void init(){
-        this.executorService.scheduleWithFixedDelay(this::resend,1,2, TimeUnit.MINUTES);
+    void init() {
+        this.executorService.scheduleWithFixedDelay(this::resend, 1, 2, TimeUnit.MINUTES);
     }
 
-    public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO){
+    public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO) {
 
         // make forward the message
         String url = "http://172.16.110.141:5000/";
@@ -46,12 +46,12 @@ public class APIService {
         // check for null body -> error checking
         String response = "";
         try {
-            response = HttpUtil.post(url,patientRecordStr, MediaType.get("application/json"));
+            response = HttpUtil.post(url, patientRecordStr, MediaType.get("application/json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if(response==""){
+        if (response == "") {
             failedRequests.add(patientRecordDTO);
         }
 
@@ -69,16 +69,19 @@ public class APIService {
 
     }
 
-    public List<PatientRecordDTO> getFailedRequests(){
+    public List<PatientRecordDTO> getFailedRequests() {
         log.debug("Request to get all failed requests");
 
         return failedRequests;
     }
 
-    public void resend(){
-        log.debug("Resending {} records",this.failedRequests.size());
-        for(PatientRecordDTO patientRecordDTO : this.failedRequests){
-            forward(patientRecordDTO);
+    public void resend() {
+        log.debug("Resending {} records", this.failedRequests.size());
+        if (!this.failedRequests.isEmpty()) {
+            for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
+                forward(patientRecordDTO);
+            }
         }
+
     }
 }
