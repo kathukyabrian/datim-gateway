@@ -77,17 +77,17 @@ public class APIService {
 
     public void resend() {
         log.debug("Resending {} records", this.failedRequests.size());
-//        if (this.failedRequests.size() > 0) {
-//            for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
-//                PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
-//                if (patientRecordDTO1.getPatientId() != null) {
-//                    log.info("Succeeded in forwarding so removing from failed requests");
-//                    int index = failedRequests.indexOf(patientRecordDTO1);
-//                    log.info("");
-//                    this.failedRequests.remove(index);
-//                }
-//            }
-//        }
+        if (this.failedRequests.size() > 0) {
+            for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
+                PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
+                if (patientRecordDTO1.getPatientId() != null) {
+                    log.info("Succeeded in forwarding so removing from failed requests");
+                    int index = failedRequests.indexOf(patientRecordDTO);
+                    log.info("Index  : {}",index);
+                    this.failedRequests.remove(index);
+                }
+            }
+        }
 
     }
 }
