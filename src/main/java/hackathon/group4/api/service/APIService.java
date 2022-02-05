@@ -26,15 +26,13 @@ public class APIService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+//    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+//    @PostConstruct
+//    void init() {
+//        this.executorService.scheduleWithFixedDelay(this::resend, 15, 15, TimeUnit.SECONDS);
+//    }
 
-    @PostConstruct
-    void init() {
-        this.executorService.scheduleWithFixedDelay(this::resend, 15, 15, TimeUnit.SECONDS);
-    }
 
-
-    @Async
     public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO) {
 
         // make forward the message
