@@ -77,10 +77,10 @@ public class APIService {
 
     public void resend() {
         log.debug("Resending {} records", this.failedRequests.size());
-        if (!this.failedRequests.isEmpty()) {
+        if (this.failedRequests.size() > 1) {
             for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
                 PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
-                if(patientRecordDTO1.getPatientId() != null){
+                if (patientRecordDTO1.getPatientId() != null) {
                     log.info("Succeeded in forwarding so removing from failed requests");
                     this.failedRequests.remove(patientRecordDTO);
                 }
