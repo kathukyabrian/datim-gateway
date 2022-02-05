@@ -77,7 +77,7 @@ public class APIService {
 
     public void resend() {
         log.debug("Resending {} records", this.failedRequests.size());
-        if (this.failedRequests.size() > 1) {
+        if (this.failedRequests.size() > 0) {
             for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
                 PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
                 if (patientRecordDTO1.getPatientId() != null) {
