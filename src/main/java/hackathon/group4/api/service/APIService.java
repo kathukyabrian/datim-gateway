@@ -8,9 +8,14 @@ import lombok.extern.log4j.Log4j2;
 import okhttp3.MediaType;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Log4j2
 @Service
@@ -19,6 +24,13 @@ public class APIService {
     private final List<PatientRecordDTO> failedRequests = new ArrayList<>();
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+    @PostConstruct
+    void init(){
+        this.executorService.scheduleWithFixedDelay(this::resend,1,2, TimeUnit.MINUTES);
+    }
 
     public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO){
 
@@ -61,5 +73,12 @@ public class APIService {
         log.debug("Request to get all failed requests");
 
         return failedRequests;
+    }
+
+    public void resend(){
+        log.debug("Resending {} records",this.failedRequests.size());
+        for(PatientRecordDTO patientRecordDTO : this.failedRequests){
+            forward(patientRecordDTO);
+        }
     }
 }
