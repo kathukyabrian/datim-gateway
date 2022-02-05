@@ -35,6 +35,8 @@ public class APIService {
 
     public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO) {
 
+        log.info("Sending to DATIM");
+
         // make forward the message
         String url = "http://172.16.110.141:5000/";
         String patientRecordStr = null;
