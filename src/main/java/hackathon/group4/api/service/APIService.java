@@ -6,6 +6,7 @@ import hackathon.group4.api.dto.PatientRecordDTO;
 import hackathon.group4.api.util.HttpUtil;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,8 @@ public class APIService {
         this.executorService.scheduleWithFixedDelay(this::resend, 15, 15, TimeUnit.SECONDS);
     }
 
+
+    @Async
     public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO) {
 
         // make forward the message
