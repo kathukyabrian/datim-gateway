@@ -82,7 +82,8 @@ public class APIService {
                 PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
                 if (patientRecordDTO1.getPatientId() != null) {
                     log.info("Succeeded in forwarding so removing from failed requests");
-                    this.failedRequests.remove(patientRecordDTO);
+                    int index = failedRequests.indexOf(patientRecordDTO1);
+                    this.failedRequests.remove(index);
                 }
             }
         }
