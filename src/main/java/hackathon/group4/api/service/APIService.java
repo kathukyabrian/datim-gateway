@@ -81,7 +81,7 @@ public class APIService {
             for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
                 PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
 
-                if(patientRecordDTO != null){
+                if(patientRecordDTO1 != null){
                     log.info("Succeeded in forwarding so removing from failed requests");
                     this.failedRequests.remove(patientRecordDTO);
                 }
