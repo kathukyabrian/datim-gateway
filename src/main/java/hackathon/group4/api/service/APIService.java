@@ -29,7 +29,7 @@ public class APIService {
 
     @PostConstruct
     void init() {
-        this.executorService.scheduleWithFixedDelay(this::resend, 30, 30, TimeUnit.SECONDS);
+        this.executorService.scheduleWithFixedDelay(this::resend, 15, 15, TimeUnit.SECONDS);
     }
 
     public PatientRecordDTO forward(PatientRecordDTO patientRecordDTO) {
