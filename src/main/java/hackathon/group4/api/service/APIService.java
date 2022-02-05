@@ -62,7 +62,7 @@ public class APIService {
         try {
             fromDATIM = objectMapper.readValue(response, PatientRecordDTO.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            fromDATIM = new PatientRecordDTO();
         }
 
         return fromDATIM;
@@ -80,8 +80,7 @@ public class APIService {
         if (!this.failedRequests.isEmpty()) {
             for (PatientRecordDTO patientRecordDTO : this.failedRequests) {
                 PatientRecordDTO patientRecordDTO1 = forward(patientRecordDTO);
-
-                if(patientRecordDTO1 != null){
+                if(patientRecordDTO1.getPatientId() != null){
                     log.info("Succeeded in forwarding so removing from failed requests");
                     this.failedRequests.remove(patientRecordDTO);
                 }
