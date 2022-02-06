@@ -4,6 +4,9 @@ import lombok.Data;
 
 @Data
 public class StatsRecordDTO {
+
+    private Integer id;
+
     private Integer hospital_id;
 
     private String hospitalName;
