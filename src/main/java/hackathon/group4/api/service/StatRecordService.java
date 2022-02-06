@@ -46,6 +46,7 @@ public class StatRecordService {
             failedRequests.add(statsRecord);
         }
 
+        log.debug("Received response : {}",response);
         // catch errors
 
         // return the response
